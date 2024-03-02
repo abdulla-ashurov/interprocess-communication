@@ -1,5 +1,7 @@
 # interprocess-communication
 
+[![Test](https://github.com/abdulla-ashurov/interprocess-communication/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/abdulla-ashurov/interprocess-communication/actions/workflows/test.yml)
+
 ## Example
 
 This program illustrates how to create inherited FileMapping object and inherite it to child process using CMD.
