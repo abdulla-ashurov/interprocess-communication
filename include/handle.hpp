@@ -26,6 +26,7 @@ public:
 	UniqueHandle& operator=(const UniqueHandle &) = delete;
 	UniqueHandle& operator=(UniqueHandle &&r) {
 		if (this != &r) {
+			details::checked_close_handle(m_handle);
 			m_handle = r.m_handle;
 			r.m_handle = nullptr;
 		}

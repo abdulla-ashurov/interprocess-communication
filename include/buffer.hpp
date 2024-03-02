@@ -26,6 +26,7 @@ public:
 	UniqueMapViewBuffer& operator=(const UniqueMapViewBuffer &) = delete;
 	UniqueMapViewBuffer& operator=(UniqueMapViewBuffer &&r) {
 		if (this != &r) {
+			details::checked_unmap_view_of_file(m_buffer);
 			m_buffer = r.m_buffer;
 			r.m_buffer = nullptr;
 		}
