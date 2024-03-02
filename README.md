@@ -14,7 +14,7 @@ This program illustrates how to create inherited FileMapping object and inherite
 
 #include "../include/process.hpp"
 #include "../include/file_mapping.hpp"
-s
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cout << "Please, provide correct list of arguments" << std::endl;
