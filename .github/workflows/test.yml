@@ -32,4 +32,4 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
-      run: ./UNIT_TESTS
+      run: ./Release/UNIT_TESTS
