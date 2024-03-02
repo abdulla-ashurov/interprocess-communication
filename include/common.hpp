@@ -39,14 +39,14 @@ UniqueMapViewBuffer map_view_of_file(UniqueHandle &f_map, const size_t size) {
 	return UniqueMapViewBuffer(buffer);
 }
 
-void create_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
-	if (!details::create_process(cmd, pi)) {
+void create_process(const std::string &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_process(cmd.c_str(), pi)) {
 		throw ProcessException("Cannot create a new child process");
 	}
 }
 
-void create_inherited_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
-	if (!details::create_inherited_process(cmd, pi)) {
+void create_inherited_process(const std::string &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_inherited_process(cmd.c_str(), pi)) {
 		throw ProcessException("Cannot create a new child process with inherited handles");
 	}
 }
