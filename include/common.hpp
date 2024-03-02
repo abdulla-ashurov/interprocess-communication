@@ -1,6 +1,10 @@
 #ifndef __COMMON_HPP__
 #define __COMMON_HPP__
 
+#include <string>
+
+#include "handle.hpp"
+#include "buffer.hpp"
 #include "details.hpp"
 #include "exceptions.hpp"
 
@@ -8,46 +12,58 @@ SECURITY_ATTRIBUTES create_security_attr(const bool inherit_handle = false) {
 	return details::security_attr(inherit_handle);
 }
 
-HANDLE create_file_mapping(const size_t size) {
+UniqueHandle create_file_mapping(const size_t size) {
 	HANDLE hFileMap = details::create_file_mapping(size);
 	if (hFileMap == NULL) {
-		throw BaseWinApiExceptions(GetLastError());
+		throw FileMappingException("Cannot create file mapping object");
 	}
 
-	return hFileMap;
+	return UniqueHandle(hFileMap);
 }
 
-HANDLE create_inherited_file_mapping(const size_t size) {
+UniqueHandle create_inherited_file_mapping(const size_t size) {
 	HANDLE hFileMap = details::create_inherited_file_mapping(size);
 	if (hFileMap == NULL) {
-		throw BaseWinApiExceptions(GetLastError());
+		throw FileMappingException("Cannot create inherited file mapping object");
 	}
 
-	return hFileMap;
+	return UniqueHandle(hFileMap);
 }
 
-void* map_view_of_file(HANDLE f_map, const size_t size) {
-	void* buffer = details::map_view_of_file(f_map, size);
+UniqueMapViewBuffer map_view_of_file(UniqueHandle &f_map, const size_t size) {
+	void *buffer = details::map_view_of_file(f_map.get(), size);
 	if (buffer == NULL) {
-		throw BaseWinApiExceptions(GetLastError());
+		throw FileMappingException("Cannot map view of file");
 	}
 
-	return buffer;
+	return UniqueMapViewBuffer(buffer);
 }
 
-void create_process(const std::wstring& cmd, PROCESS_INFORMATION& pi) {
-	if (!details::create_process(cmd, pi)) {
-		throw BaseWinApiExceptions(GetLastError());
-	}
-}
-
-void create_inherited_process(const std::wstring& cmd, PROCESS_INFORMATION& pi) {
-	if (!details::create_inherited_process(cmd, pi)) {
-		throw BaseWinApiExceptions(GetLastError());
+void create_process(const std::string &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_process(cmd.c_str(), pi)) {
+		throw ProcessException("Cannot create a new child process");
 	}
 }
 
-std::string error_message(const size_t err_code) {
+void create_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_process(cmd.c_str(), pi)) {
+		throw ProcessException("Cannot create a new child process");
+	}
+}
+
+void create_inherited_process(const std::string &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_inherited_process(cmd.c_str(), pi)) {
+		throw ProcessException("Cannot create a new child process with inherited handles");
+	}
+}
+
+void create_inherited_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
+	if (!details::create_inherited_process(cmd.c_str(), pi)) {
+		throw ProcessException("Cannot create a new child process with inherited handles");
+	}
+}
+
+std::string winapi_error_message(const size_t err_code) {
 	std::string err_msg;
 	char* out_err_msg(NULL);
 	if (details::format_message(err_code, out_err_msg)) {

@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # CMake folders
 build
+
+# VSCode folders
+.vscode
