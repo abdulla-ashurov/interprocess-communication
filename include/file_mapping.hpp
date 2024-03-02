@@ -1,8 +1,6 @@
 #ifndef __FILE_MAPPING_HPP_
 #define __FILE_MAPPING_HPP__
 
-#include <Windows.h>
-
 #include "common.hpp"
 
 template <size_t m_size>
