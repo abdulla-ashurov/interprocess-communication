@@ -61,6 +61,22 @@ namespace details {
 		);
 	}
 
+	bool create_process(const wchar_t *cmd, PROCESS_INFORMATION& pi) {
+		STARTUPINFOW si;
+		return CreateProcessW(
+			NULL,								// lpApplicationName
+			const_cast<LPWSTR>(cmd),			// lpCommandLine
+			NULL,								// lpProcessAttributes
+			NULL,								// lpThreadAttributes
+			false,								// bInheritHandles
+			NULL,								// dwCreationFlags
+			NULL,								// lpEnvironment
+			NULL,								// lpCurrentDirectory
+			&si,								// lpStartupInfo
+			&pi									// lpProcessInformation
+		);
+	}
+
 	bool create_inherited_process(const char *cmd, PROCESS_INFORMATION &pi) {
 		STARTUPINFO si = { sizeof(si) };
 		SECURITY_ATTRIBUTES sa = security_attr(true);
@@ -75,6 +91,23 @@ namespace details {
 			NULL,								// lpCurrentDirectory
 			&si,								// lpStartupInfo
 			&pi									// lpProcessInformation
+		);
+	}
+
+	bool create_inherited_process(const wchar_t *cmd, PROCESS_INFORMATION &pi) {
+	STARTUPINFOW si = { sizeof(si) };
+	SECURITY_ATTRIBUTES sa = security_attr(true);
+	return CreateProcessW(
+		NULL,								// lpApplicationName
+		const_cast<LPWSTR>(cmd),			// lpCommandLine
+		&sa,								// lpProcessAttributes
+		&sa,								// lpThreadAttributes
+		true,								// bInheritHandles
+		NULL,								// dwCreationFlags
+		NULL,								// lpEnvironment
+		NULL,								// lpCurrentDirectory
+		&si,								// lpStartupInfo
+		&pi									// lpProcessInformation
 		);
 	}
 
