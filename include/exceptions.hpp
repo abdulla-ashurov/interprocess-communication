@@ -10,7 +10,7 @@ public:
 	explicit BaseWinApiException(const int err_code) : m_err_code(err_code) {}
 
 	std::string what() const {
-		return error_message(m_err_code);
+		return winapi_error_message(m_err_code);
 	}
 };
 

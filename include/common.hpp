@@ -45,13 +45,13 @@ void create_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
 	}
 }
 
-void create_inherited_process(const std::wstring& cmd, PROCESS_INFORMATION& pi) {
+void create_inherited_process(const std::wstring &cmd, PROCESS_INFORMATION &pi) {
 	if (!details::create_inherited_process(cmd, pi)) {
 		throw ProcessException("Cannot create a new child process with inherited handles");
 	}
 }
 
-std::string error_message(const size_t err_code) {
+std::string winapi_error_message(const size_t err_code) {
 	std::string err_msg;
 	char* out_err_msg(NULL);
 	if (details::format_message(err_code, out_err_msg)) {
