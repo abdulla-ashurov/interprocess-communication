@@ -1,6 +1,7 @@
 #ifndef __COMMON_HPP__
 #define __COMMON_HPP__
 
+#include "handle.hpp"
 #include "details.hpp"
 #include "exceptions.hpp"
 
@@ -26,8 +27,8 @@ HANDLE create_inherited_file_mapping(const size_t size) {
 	return hFileMap;
 }
 
-void* map_view_of_file(HANDLE f_map, const size_t size) {
-	void* buffer = details::map_view_of_file(f_map, size);
+void* map_view_of_file(UniqueHandle &f_map, const size_t size) {
+	void* buffer = details::map_view_of_file(f_map.get(), size);
 	if (buffer == NULL) {
 		throw BaseWinApiExceptions(GetLastError());
 	}

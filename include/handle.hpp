@@ -14,7 +14,7 @@ public:
 	UniqueHandle(HANDLE h) : m_handle(h) {}
 
 	~UniqueHandle() {
-		details::checked_close_handle(h);
+		details::checked_close_handle(m_handle);
 	}
 
 public:

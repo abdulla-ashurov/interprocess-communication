@@ -3,7 +3,6 @@
 
 #include <Windows.h>
 
-#include "handle.hpp"
 #include "buffer.hpp"
 #include "common.hpp"
 
@@ -16,7 +15,7 @@ protected:
 public:
 	BaseFileMapping() {}
 	BaseFileMapping(HANDLE hFileMap) : m_hFileMap(hFileMap) {
-		m_buffer = map_view_of_file(m_hFileMap.get(), m_size);
+		m_buffer = map_view_of_file(m_hFileMap, m_size);
 	}
 	virtual ~BaseFileMapping() = 0;
 
@@ -32,10 +31,11 @@ class UniqueFileMapping : public BaseFileMapping<size_t> {
 public:
 	UniqueFileMapping() : BaseFileMapping() {
 		m_hFileMap = create_file_mapping(m_size);
-		m_buffer = map_view_of_file(m_hFileMap.get(), m_size);
+		m_buffer = map_view_of_file(m_hFileMap, m_size);
 	}
 	UniqueFileMapping(HANDLE hFileMap) : BaseFileMapping(hFileMap) {}
 
+public:
 	UniqueFileMapping(const UniqueFileMapping& other) = delete;
 	UniqueFileMapping& operator=(const UniqueFileMapping& other) = delete;
 };
@@ -45,12 +45,13 @@ class UniqueInheritedFileMapping : public BaseFileMapping<size_t> {
 public:
 	UniqueInheritedFileMapping() {
 		m_hFileMap = create_inherited_file_mapping(m_size);
-		m_buffer = map_view_of_file(m_hFileMap.get(), m_size);
+		m_buffer = map_view_of_file(m_hFileMap, m_size);
 	}
 	UniqueInheritedFileMapping(HANDLE hFileMap) : BaseFileMapping(hFileMap) {}
 
+public:
 	UniqueInheritedFileMapping(const UniqueInheritedFileMapping& other) = delete;
 	UniqueInheritedFileMapping& operator=(const UniqueInheritedFileMapping& other) = delete;
-}
+};
 
 #endif // __FILE_MAPPING_HPP
