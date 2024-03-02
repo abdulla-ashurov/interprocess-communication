@@ -10,29 +10,31 @@ private:
 	HANDLE m_handle;
 
 public:
-	UniqueHandle() : m_handle(NULL) {}
-	UniqueHandle(HANDLE h) : m_handle(h) {}
+	explicit UniqueHandle() : m_handle(nullptr) {}
+	explicit UniqueHandle(HANDLE h) : m_handle(h) {}
 
 	~UniqueHandle() {
 		details::checked_close_handle(m_handle);
 	}
 
 public:
-	UniqueHandle(const UniqueHandle& other) = delete;
-	UniqueHandle& operator=(const UniqueHandle& other) = delete;
-	UniqueHandle& operator=(HANDLE h) {
-		if (m_handle != h) {
-			details::checked_close_handle(h);
-			m_handle = h;
+	UniqueHandle(const UniqueHandle &) = delete;	
+	UniqueHandle(UniqueHandle &&r) : m_handle(r.m_handle) {
+		r.m_handle = nullptr;
+	}
+
+	UniqueHandle& operator=(const UniqueHandle &) = delete;
+	UniqueHandle& operator=(UniqueHandle &&r) {
+		if (this != &r) {
+			m_handle = r.m_handle;
+			r.m_handle = nullptr;
 		}
 
 		return *this;
 	}
 
 public:
-	HANDLE get() {
-		return m_handle;
-	}
+	HANDLE get() { return m_handle; }
 };
 
 #endif // __HANDLE_HPP__
