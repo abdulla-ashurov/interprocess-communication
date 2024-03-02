@@ -6,7 +6,6 @@
 #include "handle.hpp"
 #include "buffer.hpp"
 #include "common.hpp"
-#include "exceptions.hpp"
 
 template<size_t m_size>
 class BaseFileMapping {
@@ -28,6 +27,7 @@ public:
 	void* end() { return static_cast<uint8_t*>(m_buffer.begin()) + m_size; }
 };
 
+template<size_t m_size>
 class UniqueFileMapping : public BaseFileMapping<size_t> {
 public:
 	UniqueFileMapping() : BaseFileMapping() {
@@ -40,6 +40,7 @@ public:
 	UniqueFileMapping& operator=(const UniqueFileMapping& other) = delete;
 };
 
+template<size_t m_size>
 class UniqueInheritedFileMapping : public BaseFileMapping<size_t> {
 public:
 	UniqueInheritedFileMapping() {
@@ -52,4 +53,4 @@ public:
 	UniqueInheritedFileMapping& operator=(const UniqueInheritedFileMapping& other) = delete;
 }
 
-#endif // __FILE_MAPPING_HPP__
+#endif // __FILE_MAPPING_HPP

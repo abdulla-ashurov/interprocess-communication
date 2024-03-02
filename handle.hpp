@@ -3,7 +3,7 @@
 
 #include "Windows.h"
 
-#include "detials.hpp"
+#include "details.hpp"
 
 class UniqueHandle {
 private:

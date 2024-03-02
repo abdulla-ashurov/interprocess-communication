@@ -24,9 +24,10 @@ namespace details {
 	}
 
 	HANDLE create_inherited_file_mapping(const size_t size) {
+		SECURITY_ATTRIBUTES sa = security_attr(true);
 		return CreateFileMapping(
 			INVALID_HANDLE_VALUE,		// hFile
-			security_attr(true),		// lpFileMappingAttributes
+			&sa,						// lpFileMappingAttributes
 			PAGE_READWRITE,				// flProtect
 			0,							// dwMaximumSizeHigh
 			size,						// dwMaximumSizeHigh
@@ -77,15 +78,15 @@ namespace details {
 		);
 	}
 
-	int format_message(const int err_code, char* errMsg) {
-		return FormatMessage(
+	int format_message(const int err_code, char *errMsg) {
+		return FormatMessageA(
 			FORMAT_MESSAGE_ALLOCATE_BUFFER |
 			FORMAT_MESSAGE_FROM_SYSTEM |
 			FORMAT_MESSAGE_IGNORE_INSERTS,				// dwFlags
 			NULL,										// lpSource
 			err_code,									// dwMessageId
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),	// dwLanguageId
-			&errMsg,									// lpBuffer
+			errMsg,									// lpBuffer
 			0,											// nSize
 			NULL										// arguments
 		);

@@ -18,18 +18,19 @@ int main(int argc, char* argv[]) {
 
 	try {
 		std::string msg("Hello World!");
-		UniqueInheritedFileMapping<msg.length()> f_map;
+		const size_t MSG_LENGTH = 12;
+		UniqueInheritedFileMapping<MSG_LENGTH> f_map;
 
 		strcpy(static_cast<char*>(f_map.begin()), msg.c_str());
 
-		std::stringstream cmd;
+		std::wstringstream cmd;
 		cmd << argv[1] << (UINT_PTR)(f_map.handle());
 
-		Process process(cmd);
+		Process process(cmd.str());
 		process.join();
 	}
-	catch (FileMappingException e) {
-		std::cout << "Error: " << e.msg();
+	catch (BaseWinApiExceptions &e) {
+		std::cout << "Error: " << e.what();
 	}
 
 	return 0;

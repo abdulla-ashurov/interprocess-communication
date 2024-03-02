@@ -7,14 +7,14 @@
 
 #include "common.hpp"
 
-class BaseWinApiExceptions : public std::exceptions {
+class BaseWinApiExceptions : public std::exception {
 private:
 	int m_err_code;
 public:
 	BaseWinApiExceptions(const int err_code) : m_err_code(err_code) {}
 
-	std::string what() const {
-		return error_message(m_err_code);
+	const char* what() const {
+		return error_message(m_err_code).c_str();
 	}
 };
 

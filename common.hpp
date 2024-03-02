@@ -2,6 +2,7 @@
 #define __COMMON_HPP__
 
 #include "details.hpp"
+#include "exceptions.hpp"
 
 SECURITY_ATTRIBUTES create_security_attr(const bool inherit_handle = false) {
 	return details::security_attr(inherit_handle);

@@ -31,14 +31,14 @@ public:
 
 class Process : public BaseProcess {
 public:
-	Process(const std::wstring& cmd) {
+	Process(const std::wstring& cmd) : BaseProcess(cmd) {
 		create_process(cmd, m_pi);
 	}
 };
 
 class InheritedProcess : public BaseProcess {
 public:
-	InheritedProcess(const std::wstring& cmd) {
+	InheritedProcess(const std::wstring& cmd) : BaseProcess(cmd) {
 		create_inherited_process(cmd, m_pi);
 	}
 };

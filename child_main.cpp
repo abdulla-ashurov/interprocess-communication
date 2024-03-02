@@ -11,8 +11,8 @@ int main(int argc, char* argv[]) {
 	HANDLE hFileMap = (HANDLE)(std::stoi(argv[1]));
 	std::wcout << "hFileMap: " << hFileMap << std::endl;
 
-	const size_t size = 12;
-	UniqueFileMapping f_map<size>(hFileMap);
+	const size_t MSG_LENGTH = 12;
+	UniqueFileMapping<MSG_LENGTH> f_map(hFileMap);
 
 	std::wcout << "Message from first process: " << (const char*)(f_map.begin());
 

@@ -18,8 +18,8 @@ public:
 	}
 
 public:
-	UniqueMapViewBuffer(const MapViewBuffer& other) = delete;
-	UniqueMapViewBuffer& operator=(const MapViewBufffer& other) = delete;
+	UniqueMapViewBuffer(const UniqueMapViewBuffer& other) = delete;
+	UniqueMapViewBuffer& operator=(const UniqueMapViewBuffer& other) = delete;
 	UniqueMapViewBuffer& operator=(void* buffer) {
 		if (m_buffer != buffer) {
 			details::checked_unmap_view_of_file(m_buffer);
