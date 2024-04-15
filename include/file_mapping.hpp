@@ -7,7 +7,7 @@ template <size_t m_size>
 class BaseFileMapping {
 protected:
 	UniqueHandle m_hFileMap;
-	UniqueMapViewBuffer m_buffer;
+	UniqueMapViewBuffer<m_size> m_buffer;
 
 public:
 	explicit BaseFileMapping() {}
@@ -30,10 +30,9 @@ public:
 	}
 
 public:
-	size_t size() const { return m_size; }
-	HANDLE handle() { return m_hFileMap.get(); }
+	size_t size() const { return m_buffer.size(); }
 	void* begin() { return m_buffer.begin(); }
-	void* end() { return static_cast<uint8_t*>(m_buffer.begin()) + m_size; }
+	void* end() { return m_buffer.end(); }
 };
 
 template <size_t m_size>

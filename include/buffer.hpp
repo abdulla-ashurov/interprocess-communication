@@ -5,6 +5,7 @@
 
 #include "details.hpp"
 
+template <size_t m_size>
 class UniqueMapViewBuffer {
 private:
 	void *m_buffer;
@@ -35,7 +36,10 @@ public:
 	}
 
 public:
+	size_t size() const { return m_size; }
+	
 	void* begin() { return m_buffer; }
+	void* end() { return static_cast<uint8_t*>(m_buffer) + m_size; }
 };
 
 #endif // __BUFFER_HPP__
