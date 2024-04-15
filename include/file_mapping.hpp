@@ -30,6 +30,8 @@ public:
 	}
 
 public:
+	HANDLE handle() { return m_hFileMap.handle(); }
+
 	size_t size() const { return m_buffer.size(); }
 	void* begin() { return m_buffer.begin(); }
 	void* end() { return m_buffer.end(); }

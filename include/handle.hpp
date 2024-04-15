@@ -35,7 +35,7 @@ public:
 	}
 
 public:
-	HANDLE get() { return m_handle; }
+	HANDLE handle() { return m_handle; }
 };
 
 #endif // __HANDLE_HPP__
