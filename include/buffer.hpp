@@ -23,7 +23,8 @@ public:
 public:
 	UniqueMapViewBuffer(const UniqueMapViewBuffer &) = delete;
 	UniqueMapViewBuffer& operator=(const UniqueMapViewBuffer &) = delete;
-	
+
+public:
 	UniqueMapViewBuffer(UniqueMapViewBuffer &&r) : UniqueMapViewBuffer()  {
 		swap(*this, r);
 	}
