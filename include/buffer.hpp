@@ -1,8 +1,6 @@
 #ifndef __BUFFER_HPP__
 #define __BUFFER_HPP__
 
-#include "Windows.h"
-
 #include "details.hpp"
 
 template <size_t m_size>
