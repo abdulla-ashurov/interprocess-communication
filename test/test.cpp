@@ -1,6 +1,7 @@
 #include "catch_amalgamated.hpp"
 
 #include "../include/buffer.hpp"
+#include "../include/handle.hpp"
 
 TEST_CASE("Test UniqueMapViewBuffer class") {
     SECTION("Test UniqueMapViewBuffer move constructor") {
@@ -19,7 +20,7 @@ TEST_CASE("Test UniqueMapViewBuffer class") {
         REQUIRE(buffer1.begin() == nullptr);
     }
 
-    SECTION("Test UniqueMapViewBuffer move operator=") {
+    SECTION("Test UniqueMapViewBuffer operator=") {
         const size_t SIZE = 20;
         UniqueMapViewBuffer buffer1(SIZE, details::map_view_of_file(details::create_file_mapping(SIZE), SIZE));
         UniqueMapViewBuffer buffer2(SIZE, details::map_view_of_file(details::create_file_mapping(SIZE), SIZE));
@@ -33,5 +34,20 @@ TEST_CASE("Test UniqueMapViewBuffer class") {
 
         REQUIRE(buffer1.size() == 0);
         REQUIRE(buffer1.begin() == nullptr);
+    }
+}
+
+TEST_CASE("Test UniqueHandle class") {
+    SECTION("Test UniqueHandle move constructor") {
+        UniqueHandle handle1(details::create_file_mapping(20));
+        HANDLE expected_handle = handle1.handle();
+
+        UniqueHandle handle2(std::move(handle1));
+        REQUIRE(handle2.handle() == expected_handle);
+        REQUIRE(handle1.handle() == nullptr);
+    }
+
+    SECTION("Test UniqueHandle operator=") {
+
     }
 }
