@@ -1,8 +1,6 @@
 #ifndef __HANDLE_HPP__
 #define __HANDLE_HPP__
 
-#include "Windows.h"
-
 #include "details.hpp"
 
 class UniqueHandle {
@@ -20,7 +18,7 @@ public:
 	}
 
 public:
-	UniqueHandle(const UniqueHandle &) = delete;	
+	UniqueHandle(const UniqueHandle &) = delete;
 	UniqueHandle& operator=(const UniqueHandle &) = delete;
 
 public:
