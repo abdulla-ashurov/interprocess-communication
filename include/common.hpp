@@ -31,12 +31,12 @@ UniqueHandle create_inherited_file_mapping(const size_t size) {
 }
 
 UniqueMapViewBuffer map_view_of_file(UniqueHandle &f_map, const size_t size) {
-	void *buffer = details::map_view_of_file(f_map.get(), size);
+	void *buffer = details::map_view_of_file(f_map.handle(), size);
 	if (buffer == NULL) {
 		throw FileMappingException("Cannot map view of file");
 	}
 
-	return UniqueMapViewBuffer(buffer);
+	return UniqueMapViewBuffer(size, buffer);
 }
 
 void create_process(const std::string &cmd, PROCESS_INFORMATION &pi) {
